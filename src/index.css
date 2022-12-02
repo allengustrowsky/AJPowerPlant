@@ -1,8 +1,16 @@
 :root {
-  font-size: 16px;
-  line-height: 24px;
-  font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
 
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+
+    --dark-blue: #0B3954;
+    --light-blue: #BFD7EA;
+    --light-red: #FF6663;
+    --yellow: #E0FF4F;
+    --white: #FEFFFE;
+
+    background-color: var(--dark-blue);
 }
