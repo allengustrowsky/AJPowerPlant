@@ -12,5 +12,7 @@
     --yellow: #E0FF4F;
     --white: #FEFFFE;
 
+    --large-card-box-shadow: '0 9px 20px 55px blue'
+
     background-color: var(--dark-blue);
 }

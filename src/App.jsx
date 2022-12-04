@@ -1,14 +1,17 @@
 import { useState } from 'react'
 import './App.css'
-import Gallery from '../components/Gallery'
-
-
+import ReactorCard from '../components/ReactorCard'
+import Paper from '@mui/material/Paper'
 function App() {
 
 
     return (
-        <div>
-            <Gallery />
+        <div className='appContainer'>
+            <Paper elevation={4} className='reactorContainer' sx={{ backgroundColor: 'var(--dark-blue)' }}>
+                {[...new Array(5)].map((_, index) => {
+                    return <ReactorCard key={index} />
+                })}
+            </Paper>
         </div>
     )
 }

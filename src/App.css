@@ -13,11 +13,21 @@ body {
     min-height: 100vh;
 }
 
-.gallery {
+.appContainer {
+    width: 100%;
+    display: flex;
+    place-items: center;
+}
+
+.reactorContainer {
+    width: 100%;
     display: flex;
     gap: 3rem;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    background-color: var(--dark-blue);
+    padding: 2rem;
+    box-shadow: var(--large-card-box-shadow);
 }
 
