@@ -1,9 +1,12 @@
 import { useState } from 'react'
+import { useParams } from 'react-router-dom'
 
-const Reactor = (props) => {
+const Reactor = () => {
+    const { id } = useParams()
+
     return (
         <div>
-            <p style={{color: 'white'}}>Reactor component</p>
+            <p style={{color: 'black'}}>Reactor component: {id}</p>
         </div>
     )
 }
