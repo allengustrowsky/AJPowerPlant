@@ -2,12 +2,12 @@ import { useState, useEffect, useRef } from 'react'
 import './App.css'
 import ReactorCard from '../components/ReactorCard'
 // import Paper from '@mui/material/Paper'
-import { Paper, Typography, ButtonGroup } from '@mui/material';
+import { Paper, Typography, ButtonGroup, Button } from '@mui/material';
 
 function App() {
     const [reactorData, setReactorData] = useState('')
     const [temps, setTemps] = useState('')
-    const [totalOutput, setTotalOutput] = useState('Loading...')
+    const [totalOutput, setTotalOutput] = useState('')
     const chartRef = useRef(null)
     const apiKey = 'ccb430c9775bba27'
 
@@ -102,16 +102,32 @@ function App() {
                 }
             </Paper>
             {/* <Container component='div' maxWidth='xl' className='graphAndAction' sx={{backgroundColor: 'var(--dark-blue)', color: 'var(--white)'}}> */}
+            {/* Graph */}
             <div className="graphAndAction">
                 <Paper className='graphContainer data' elevation={5}>
                     <canvas ref={chartRef} className='graphCanvas'>
 
                     </canvas>
                 </Paper>
+                {/* Output + action button */}
                 <Paper className='actionBtnContainer data' elevation={5} >
                     <Typography className='totalOutputContainer' variant='h5' component='h2'>
-                        Total Output: <p className='totalOutputData'>{totalOutput}</p>
+                        Total Output: <p className='totalOutputData'>{(totalOutput === '') ? 'Loading...' : `${totalOutput} Gw`}</p>
                     </Typography>
+                    <div className="btnGroup">
+                        <div className="coolantContainer btnCol">
+                            {/* <ButtonGroup className='coolantBtnGroup' orientation='vertical' size='large' variant='outlined'> */}
+                            <Button className='actionBtn' variant='outlined'>Enable Coolant</Button>
+                            <Button className='actionBtn' variant='outlined'>Disable Coolant</Button>
+                            {/* </ButtonGroup> */}
+                        </div>
+                        <div className="btnCol">
+                            <Button className='actionBtn' variant='outlined'>Global Reset</Button>
+                            <Button className='actionBtn' variant='outlined'>Controller Shutdown</Button>
+                        </div>
+                        <Button className='actionBtn' variant='outlined'>Emergency Shutdown</Button>
+                    </div>
+
                 </Paper>
             {/* </Container> */}
             

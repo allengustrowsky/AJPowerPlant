@@ -71,10 +71,32 @@ body {
 
 .totalOutputContainer {
     text-align: left;
-
 }
 
 .totalOutputData {
     font-size: 1.2rem;
     display: inline;
+}
+
+.btnGroup {
+    height: 85%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.btnCol {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.coolantBtnGroup {
+    display: inline;
+}
+
+.actionBtn {
+    height: 4.3rem;
+    width: 9rem;
 }
