@@ -1,10 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
 import './App.css'
 import ReactorCard from '../components/ReactorCard'
-import Paper from '@mui/material/Paper'
-import Container from '@mui/material/Container'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
+// import Paper from '@mui/material/Paper'
+import { Paper, Typography, ButtonGroup } from '@mui/material';
 
 function App() {
     const [reactorData, setReactorData] = useState('')
