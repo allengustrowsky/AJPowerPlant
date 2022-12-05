@@ -44,7 +44,7 @@ const ReactorCart = (props) => {
             </CardContent>
             <CardActions>
                 <div onClick={handleRoute}>
-                    <Button size="small">View Data</Button>
+                    <Button size="small" sx={{color: 'var(--dark-blue)'}}>View Data</Button>
                 </div>
             </CardActions>
         </Card>
