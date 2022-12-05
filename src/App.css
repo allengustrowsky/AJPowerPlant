@@ -37,17 +37,44 @@ body {
 
 /* Graph and Action Buttons Section */
 .graphAndAction {
+    width: 95%;
+    display: flex;
     flex-direction: row;
-    
+    background-color: var(--dark-blue);
+    color: var(--white);
+    align-items: center;
+    justify-content: center;
+    gap: 10%;
 }
 
 .data {
     display: inline-block;
-    background-color: red;
     margin: 1.5rem 0;
+    width: 30rem;
+    height: 15rem;
+    padding: 0.5rem;
+
 }
 
 .graphContainer {
-    margin-right: 6rem;
+    /* margin-right: 6rem; */
     background-color: green;
+}
+
+.graphCanvas {
+    /* background-color: orange; */
+}
+
+.actionBtnContainer {
+    
+}
+
+.totalOutputContainer {
+    text-align: left;
+
+}
+
+.totalOutputData {
+    font-size: 1.2rem;
+    display: inline;
 }

@@ -1,13 +1,16 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import './App.css'
 import ReactorCard from '../components/ReactorCard'
 import Paper from '@mui/material/Paper'
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
 
 function App() {
     const [reactorData, setReactorData] = useState('')
     const [temps, setTemps] = useState('')
+    const [totalOutput, setTotalOutput] = useState('Loading...')
+    const chartRef = useRef(null)
     const apiKey = 'ccb430c9775bba27'
 
     useEffect(() => {
@@ -60,6 +63,37 @@ function App() {
         }, 0)
     }
 
+    // create chart
+    useEffect(() => {
+        const context = chartRef.current
+
+        const dataChart = new Chart(context, {
+            type: 'line',
+            data: {
+                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                datasets: [{
+                    label: 'Average Reactor Temperature',
+                    data: [12, 19, 3, 5, 2, 3],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                animation: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        })
+
+        return () => {
+            dataChart.destroy()
+          }
+    }, [])
+
+
+
     return (
         <div className='appContainer'>
             <h1>{reactorData.plant_name}</h1>
@@ -69,15 +103,20 @@ function App() {
                     })
                 }
             </Paper>
-            <Container component='div' maxWidth='xl' className='graphAndAction' sx={{backgroundColor: 'var(--dark-blue)', color: 'var(--white)'}}>
-                <Box className='graphContainer data'>
-                    the graph
-                </Box>
-                <Box className='actionBtnContainer data'>
-                    action buttons
-                </Box>
-            </Container>
+            {/* <Container component='div' maxWidth='xl' className='graphAndAction' sx={{backgroundColor: 'var(--dark-blue)', color: 'var(--white)'}}> */}
             <div className="graphAndAction">
+                <Paper className='graphContainer data' elevation={5}>
+                    <canvas ref={chartRef} className='graphCanvas'>
+
+                    </canvas>
+                </Paper>
+                <Paper className='actionBtnContainer data' elevation={5} >
+                    <Typography className='totalOutputContainer' variant='h5' component='h2'>
+                        Total Output: <p className='totalOutputData'>{totalOutput}</p>
+                    </Typography>
+                </Paper>
+            {/* </Container> */}
+            
 
             </div>
         </div>
