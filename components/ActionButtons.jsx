@@ -3,7 +3,7 @@ import { Paper, Typography, Button } from '@mui/material'
 import { createTheme, ThemeProvider} from '@mui/material/styles'
 
 const ActionButtons = (props) => {
-    const { reactorData, apiKey } = props
+    const { reactorData, apiKey, enqueueSnackbar, closeSnackbar, action } = props
     const [totalOutput, setTotalOutput] = useState('')
 
     // Theme override for actions button
@@ -20,6 +20,8 @@ const ActionButtons = (props) => {
 
     // Event handlers
     const toggleCoolant = (value) => { // value -> 'on' or 'off'
+        let success = true;
+
         reactorData.reactors.forEach(async (reactor) => {
             // fetch current state
             const rawB = await fetch('https://nuclear.dacoder.io/reactors/coolant/' + reactor.id + '?apiKey=' + apiKey)
@@ -35,6 +37,11 @@ const ActionButtons = (props) => {
                 method: 'POST',
                 body: JSON.stringify( {'coolant': value} )
             })
+            console.log(raw.status)
+
+            // set success to false if there is a failure
+            (raw.status === 201) && (success = false)
+
             console.log('result: ')
             console.log(raw)
             // display udpated state to make sure it changed
@@ -43,6 +50,16 @@ const ActionButtons = (props) => {
             console.log('after state:')
             console.log(jsonDataA)
         })
+        // notify user in snackbar
+        if (success) {
+            enqueueSnackbar(`Coolant successfully ${value === 'on' ? 'enabled' : 'disabled'} for all reactors.`, {
+                preventDuplicate: false,
+                style: {
+                    width: '350px',
+                    textAlign: 'left',
+                },
+            })
+        }
     }
 
 

@@ -3,13 +3,15 @@ import './App.css'
 import ReactorCard from '../components/ReactorCard'
 import Logs from '../components/Logs'
 import ActionButtons from '../components/ActionButtons'
-// import Paper from '@mui/material/Paper'
-import { Paper, Card } from '@mui/material';
+import { Paper, Card, Button } from '@mui/material';
+import { useSnackbar } from 'notistack'
 
 function App() {
     const [reactorData, setReactorData] = useState('')
     const [temps, setTemps] = useState('')
     const chartRef = useRef(null)
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
     const apiKey = 'ccb430c9775bba27'
     useEffect(() => {
         const getData = async () => {
@@ -91,6 +93,13 @@ function App() {
           }
     }, [])
 
+    // Dismiss snackbars
+    const action = (snackbarId) => (
+        <>
+            <Button onClick={() => closeSnackbar(snackbarId)} sx={{float: 'right', display: 'inline-block'}}>Dismiss</Button>
+        </>
+    )
+
     // Get reactor messages
     // useEffect(() => {
         // const getMessages = async () => {
@@ -124,7 +133,7 @@ function App() {
                     </canvas>
                 </Paper>
                 {/* Output + action button */}
-                <ActionButtons reactorData={reactorData} apiKey={apiKey} />
+                <ActionButtons reactorData={reactorData} apiKey={apiKey} enqueueSnackbar={enqueueSnackbar} closeSnackbar={closeSnackbar} action={action} />
             {/* </Container> */}
             </div>
             {/* Messages and Logs */}
@@ -132,7 +141,7 @@ function App() {
                 <Card className='msgsContainer' sx={{width: '25rem', height: '20rem', backgroundColor: 'var(--dark-blue)', color: 'var(--white)', padding: '0.8rem'}}>
                     Messages
                 </Card>
-                <Logs apiKey={apiKey} />
+                <Logs apiKey={apiKey} enqueueSnackbar={enqueueSnackbar} closeSnackbar={closeSnackbar} action={action} />
             </div>
 
             {/* Logs */}

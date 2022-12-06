@@ -1,13 +1,11 @@
 import { Card, Typography, Button } from '@mui/material'
 import { useEffect } from 'react'
 import { useState } from 'react'
-import { useSnackbar } from 'notistack'
 
 const Logs = (props) => {
-    const { apiKey } = props
+    const { apiKey, enqueueSnackbar, closeSnackbar, action } = props
     const [logs, setLogs] = useState('')
     const [messages, setMessages] = useState('')
-    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
     const handleClick = () => {
         console.log('handleClick')
@@ -72,13 +70,6 @@ const Logs = (props) => {
         // }
 
     }, [logs])  
-
-    // Dismiss snackbars
-    const action = (snackbarId) => (
-        <>
-            <Button onClick={() => closeSnackbar(snackbarId)} sx={{float: 'right', display: 'inline-block'}}>Dismiss</Button>
-        </>
-    )
 
     return (
         <Card className='logsContainer' sx={{width: '40rem', height: '20rem', backgroundColor: 'var(--dark-blue)', color: 'var(--white)', overflow: 'scroll'}}>
