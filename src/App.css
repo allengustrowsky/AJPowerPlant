@@ -111,3 +111,19 @@ body {
     place-items: center;
     flex-wrap: wrap;
 }
+
+.logsContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.8rem;
+    overflow: scroll;
+    padding: 0.8rem;
+}
+
+.message {
+    width: 90%;
+    /* padding: 0.5rem; */
+    min-height: max-content;
+}

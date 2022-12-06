@@ -163,7 +163,7 @@ function App() {
             </div>
             {/* Messages and Logs */}
             <div className="msgsAndLogsContainer">
-                <Card className='msgsContainer' sx={{width: '25rem', height: '20rem', backgroundColor: 'var(--dark-blue)', color: 'var(--white)'}}>
+                <Card className='msgsContainer' sx={{width: '25rem', height: '20rem', backgroundColor: 'var(--dark-blue)', color: 'var(--white)', padding: '0.8rem'}}>
                     Messages
                 </Card>
                 <Logs apiKey={apiKey} />
