@@ -1,0 +1,14 @@
+would there be a problem if the reactor unit was changed in its view? This would cause this calculated average to be off
+
+CURRENT: totalTemp is returning a promise and not a number. Mayybe push to array and then sum it all once the promise resolves?
+or check if it's the corect value appended to the end of string (22.22222)
+-await the final average calculation expression and itll work?
+
+-need to add reactor avg temp graph
+-improve "loading" while reactor cards are loading
+-remove commented, unnecessary code
+-yeah probably split up so you don't have to refresh the whole component
+-responsive design
+-use lato font 
+
+-CURRENT next: consider moving styles from cards to stylesheet for responsivity or else changing the component used

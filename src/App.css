@@ -103,3 +103,11 @@ body {
 
 /* button colors are configured inline with createTheme */
 
+
+/* Message and Logs */
+.msgsAndLogsContainer {
+    display: flex;
+    gap: 10rem;
+    place-items: center;
+    flex-wrap: wrap;
+}
