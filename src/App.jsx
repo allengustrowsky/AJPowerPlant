@@ -2,14 +2,13 @@ import { useState, useEffect, useRef } from 'react'
 import './App.css'
 import ReactorCard from '../components/ReactorCard'
 import Logs from '../components/Logs'
+import ActionButtons from '../components/ActionButtons'
 // import Paper from '@mui/material/Paper'
-import { Paper, Typography, ButtonGroup, Button, Card } from '@mui/material';
-import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { Paper, Card } from '@mui/material';
 
 function App() {
     const [reactorData, setReactorData] = useState('')
     const [temps, setTemps] = useState('')
-    const [totalOutput, setTotalOutput] = useState('')
     const chartRef = useRef(null)
     const apiKey = 'ccb430c9775bba27'
 
@@ -25,7 +24,7 @@ function App() {
         getData()
     }, [])
     
-
+    // Get average temperature
     const getAverage = async () => {
         // reactorData.foreach(async (reactor) => {
         //     const raw = await fetch('https://nuclear.dacoder.io/reactors/temperature/' + reactor.id + '?apiKey=' + apiKey)
@@ -93,18 +92,6 @@ function App() {
           }
     }, [])
 
-    // Theme override for actions button
-    const btnTheme = createTheme({
-        palette: {
-            yellow: {
-                main: '#E0FF4F',
-            },
-            lightRed: {
-                main: '#FF6663',
-            },
-        },
-    })
-
     // Get reactor messages
     // useEffect(() => {
         // const getMessages = async () => {
@@ -138,27 +125,7 @@ function App() {
                     </canvas>
                 </Paper>
                 {/* Output + action button */}
-                <Paper className='actionBtnContainer data' elevation={5} >
-                    <Typography className='totalOutputContainer' variant='h5' component='h2'>
-                        Total Output: <p className='totalOutputData'>{(totalOutput === '') ? 'Loading...' : `${totalOutput} Gw`}</p>
-                    </Typography>
-                    <div className="btnGroup">
-                        <ThemeProvider theme={btnTheme}>
-                            <div className="coolantContainer btnCol">
-                                {/* <ButtonGroup className='coolantBtnGroup' orientation='vertical' size='large' variant='outlined'> */}
-                                <Button className='actionBtn' variant='contained' color='yellow'>Enable Coolant</Button>
-                                <Button className='actionBtn' variant='contained' color='yellow'>Disable Coolant</Button>
-                                {/* </ButtonGroup> */}
-                            </div>
-                            <div className="btnCol">
-                                <Button className='actionBtn' variant='contained' color='yellow'>Global Reset</Button>
-                                <Button className='actionBtn' variant='contained' color='yellow'>Controller Shutdown</Button>
-                            </div>
-                            <Button className='actionBtn emergencyBtn' variant='contained' color='lightRed'>Emergency Shutdown</Button>
-                        </ThemeProvider>
-                    </div>
-
-                </Paper>
+                <ActionButtons />
             {/* </Container> */}
             </div>
             {/* Messages and Logs */}
