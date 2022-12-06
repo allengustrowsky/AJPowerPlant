@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Paper, Typography, Button } from '@mui/material'
 import { createTheme, ThemeProvider} from '@mui/material/styles'
 
 const ActionButtons = (props) => {
+    const { reactorData, apiKey } = props
     const [totalOutput, setTotalOutput] = useState('')
 
     // Theme override for actions button
@@ -17,6 +18,55 @@ const ActionButtons = (props) => {
         },
     })
 
+    // Event handlers
+    const toggleCoolant = (value) => { // value -> 'on' or 'off'
+        reactorData.reactors.forEach(async (reactor) => {
+            // fetch current state
+            const rawB = await fetch('https://nuclear.dacoder.io/reactors/coolant/' + reactor.id + '?apiKey=' + apiKey)
+            const jsonDataB = await rawB.json()
+            console.log('before state:')
+            console.log(jsonDataB)
+            // update current state
+            const raw = await fetch('https://nuclear.dacoder.io/reactors/coolant/' + reactor.id + '?apiKey=' + apiKey, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: 'POST',
+                body: JSON.stringify( {'coolant': value} )
+            })
+            console.log('result: ')
+            console.log(raw)
+            // display udpated state to make sure it changed
+            const rawA = await fetch('https://nuclear.dacoder.io/reactors/coolant/' + reactor.id + '?apiKey=' + apiKey)
+            const jsonDataA = await rawA.json()
+            console.log('after state:')
+            console.log(jsonDataA)
+        })
+    }
+
+
+
+    // DELETE ME and the below useESffect
+    // const temp = async () => {
+    //     reactorData.reactors.forEach(async (reactor) => {
+    //         const rawB = await fetch('https://nuclear.dacoder.io/reactors/coolant/' + reactor.id + '?apiKey=' + apiKey)
+    //         const jsonDataB = await rawB.json()
+    //         console.log(jsonDataB) 
+    //     })
+    //     console.log('----------------------------------')
+
+    // }
+    // DELETE ME
+    // useEffect(() => {
+    //     // temp()
+    //     // const id = setInterval(temp, 200)
+
+    //     // return () => {
+    //         // clearInterval(id)
+    //     // }
+    // })
+
     return (
         <Paper className='actionBtnContainer data' elevation={5} >
             <Typography className='totalOutputContainer' variant='h5' component='h2'>
@@ -26,8 +76,8 @@ const ActionButtons = (props) => {
                 <ThemeProvider theme={btnTheme}>
                     <div className="coolantContainer btnCol">
                         {/* <ButtonGroup className='coolantBtnGroup' orientation='vertical' size='large' variant='outlined'> */}
-                        <Button className='actionBtn' variant='contained' color='yellow'>Enable Coolant</Button>
-                        <Button className='actionBtn' variant='contained' color='yellow'>Disable Coolant</Button>
+                        <Button className='actionBtn' variant='contained' color='yellow' onClick={() => toggleCoolant('on')}>Enable Coolant</Button>
+                        <Button className='actionBtn' variant='contained' color='yellow' onClick={() => toggleCoolant('off')}>Disable Coolant</Button>
                         {/* </ButtonGroup> */}
                     </div>
                     <div className="btnCol">

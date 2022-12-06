@@ -11,7 +11,6 @@ function App() {
     const [temps, setTemps] = useState('')
     const chartRef = useRef(null)
     const apiKey = 'ccb430c9775bba27'
-
     useEffect(() => {
         const getData = async () => {
             const raw = await fetch('https://nuclear.dacoder.io/reactors?apiKey=' + apiKey)
@@ -125,7 +124,7 @@ function App() {
                     </canvas>
                 </Paper>
                 {/* Output + action button */}
-                <ActionButtons />
+                <ActionButtons reactorData={reactorData} apiKey={apiKey} />
             {/* </Container> */}
             </div>
             {/* Messages and Logs */}
