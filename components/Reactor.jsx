@@ -50,7 +50,7 @@ const Reactor = () => {
     let matches = regExp.exec(output.output.unit)
 
     return (
-        <div style={{background: '#BFD7EA'}}>
+        <div className="dataContainer" style={{background: '#BFD7EA'}}>
             <p style={{color: 'black'}}>Reactor component: {id}</p>
             <p>Name: {filtered[0].name}</p>
             <p>{temp.temperature.amount} {symbol}</p>

@@ -127,3 +127,14 @@ body {
     /* padding: 0.5rem; */
     min-height: max-content;
 }
+
+
+
+
+
+
+/* Reactor View Styles */
+.dataContainer {
+    width: 50rem;
+    height: 19rem; 
+}
