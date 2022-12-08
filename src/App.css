@@ -1,8 +1,11 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+    font-family: "Open Sans";
 }
 
 body {
@@ -65,9 +68,7 @@ body {
     /* background-color: orange; */
 }
 
-.actionBtnContainer {
-    
-}
+.actionBtnContainer {}
 
 .totalOutputContainer {
     text-align: left;
@@ -128,13 +129,30 @@ body {
     min-height: max-content;
 }
 
-
-
-
-
-
 /* Reactor View Styles */
 .dataContainer {
-    width: 50rem;
-    height: 19rem; 
+    height: 100%;
+    width: 600px;
+    padding: 10px;
+}
+
+.reactorText {
+    margin: 20px;
+}
+
+.reactorButton {
+    background-color: #0B3954;
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 50%;
+    width: 110px;
+    margin-top: 10px;
+    height: 80px;
+}
+
+@media screen and (max-width: 800px) {
+    .dataContainer {
+        width: 100%;
+    }
 }
