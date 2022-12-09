@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Paper, Typography, Button } from '@mui/material'
-import { createTheme, ThemeProvider} from '@mui/material/styles'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
 
 const ActionButtons = (props) => {
     const { reactorData, apiKey, enqueueSnackbar, closeSnackbar, action } = props
@@ -19,10 +19,10 @@ const ActionButtons = (props) => {
     })
 
     // Event handlers
-    const toggleCoolant = (value) => { // value -> 'on' or 'off'
-        let success = true;
-
-        reactorData.reactors.forEach(async (reactor) => {
+    const toggleCoolant = async (value) => { // value -> 'on' or 'off'
+        console.log(`value: ${value}`)
+        let success = true
+        for (let reactor of reactorData.reactors) {
             // fetch current state
             const rawB = await fetch('https://nuclear.dacoder.io/reactors/coolant/' + reactor.id + '?apiKey=' + apiKey)
             const jsonDataB = await rawB.json()
@@ -35,12 +35,14 @@ const ActionButtons = (props) => {
                     'Content-Type': 'application/json'
                 },
                 method: 'POST',
-                body: JSON.stringify( {'coolant': value} )
+                body: JSON.stringify({ 'coolant': value })
             })
             console.log(raw.status)
 
             // set success to false if there is a failure
-            (raw.status === 201) && (success = false)
+            if (raw.status !== 201) {
+                success = false
+            }
 
             console.log('result: ')
             console.log(raw)
@@ -49,7 +51,8 @@ const ActionButtons = (props) => {
             const jsonDataA = await rawA.json()
             console.log('after state:')
             console.log(jsonDataA)
-        })
+        }
+
         // notify user in snackbar
         if (success) {
             enqueueSnackbar(`Coolant successfully ${value === 'on' ? 'enabled' : 'disabled'} for all reactors.`, {
@@ -65,24 +68,23 @@ const ActionButtons = (props) => {
 
 
     // DELETE ME and the below useESffect
-    // const temp = async () => {
-    //     reactorData.reactors.forEach(async (reactor) => {
-    //         const rawB = await fetch('https://nuclear.dacoder.io/reactors/coolant/' + reactor.id + '?apiKey=' + apiKey)
-    //         const jsonDataB = await rawB.json()
-    //         console.log(jsonDataB) 
-    //     })
-    //     console.log('----------------------------------')
-
-    // }
+    const temp = async () => {
+        for (let reactor of reactorData.reactors) {
+            const rawB = await fetch('https://nuclear.dacoder.io/reactors/coolant/' + reactor.id + '?apiKey=' + apiKey)
+            const jsonDataB = await rawB.json()
+            console.log(jsonDataB)
+        }
+        console.log('----------------------------------')
+    }
     // DELETE ME
-    // useEffect(() => {
-    //     // temp()
-    //     // const id = setInterval(temp, 200)
+    useEffect(() => {
+        // temp()
+        // const id = setInterval(temp, 900)
 
-    //     // return () => {
-    //         // clearInterval(id)
-    //     // }
-    // })
+        // return () => {
+            // clearInterval(id)
+        // }
+    }, [])
 
     return (
         <Paper className='actionBtnContainer data' elevation={5} >
