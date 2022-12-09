@@ -156,3 +156,14 @@ body {
         width: 100%;
     }
 }
+
+.dataRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.rowFirst {
+    margin: 1rem 0;
+}

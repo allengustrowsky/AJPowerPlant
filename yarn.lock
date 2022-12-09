@@ -424,6 +424,13 @@
   resolved "https://registry.npmjs.org/@mui/core-downloads-tracker/-/core-downloads-tracker-5.10.16.tgz"
   integrity sha512-eK9+olw2ZbXX+vGrtKnN01/vLP1aX0Lq0xok35bqWM1aB93Dcmky/xPNf8h31oJ/C+IzJBjZaZMEDzVZg4Qc0A==
 
+"@mui/icons-material@^5.10.16":
+  version "5.10.16"
+  resolved "https://registry.yarnpkg.com/@mui/icons-material/-/icons-material-5.10.16.tgz#9c16054d0cc54d40267447128a07e79b516ead1e"
+  integrity sha512-jjCc0IF6iyLiucQCu5igg3fOscSqbbvRCmyRxXgzOcLR56B0sg2L8o+ZfJ0dAg59+wvgtXaxvjze/mJg0B4iWA==
+  dependencies:
+    "@babel/runtime" "^7.20.1"
+
 "@mui/material@^5.10.16":
   version "5.10.16"
   resolved "https://registry.npmjs.org/@mui/material/-/material-5.10.16.tgz"
@@ -1059,7 +1066,7 @@ prop-types@^15.6.2, prop-types@^15.8.1:
 
 react-bootstrap@^2.7.0:
   version "2.7.0"
-  resolved "https://registry.npmjs.org/react-bootstrap/-/react-bootstrap-2.7.0.tgz"
+  resolved "https://registry.yarnpkg.com/react-bootstrap/-/react-bootstrap-2.7.0.tgz#4a8f0311bccac477dc925366763c536f46e4393b"
   integrity sha512-Jcrn6aUuRVBeSB6dzKODKZU1TONOdhAxu0IDm4Sv74SJUm98dMdhSotF2SNvFEADANoR+stV+7TK6SNX1wWu5w==
   dependencies:
     "@babel/runtime" "^7.17.2"

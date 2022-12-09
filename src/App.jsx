@@ -8,7 +8,7 @@ import { useSnackbar } from 'notistack'
 
 function App() {
     const [reactorData, setReactorData] = useState('')
-    const [temps, setTemps] = useState('')
+    const [averageTemps, setAverageTemps] = useState([])
     const chartRef = useRef(null)
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
@@ -17,16 +17,15 @@ function App() {
     const getData = async () => {
         const raw = await fetch('https://nuclear.dacoder.io/reactors?apiKey=' + apiKey)
         const jsonData = await raw.json()
-        setReactorData(jsonData)
 
-        // for obj in jsonData.reactors as reactor, 
-        // get temperature data of reactor.id
-        // set reactor.temperate to that
+        const singleTemps = []
+
         for (let reactor of jsonData.reactors) {
             // get temperature data (value, unit, and level)
             const rawTemp = await fetch('https://nuclear.dacoder.io/reactors/temperature/' + reactor.id + '?apiKey=' + apiKey)
             const jsonTempData = await rawTemp.json()
             reactor.temperature = jsonTempData.temperature
+            singleTemps.push(jsonTempData.temperature)
 
             // get reactor state data
             const rawState = await fetch('https://nuclear.dacoder.io/reactors/reactor-state/' + reactor.id + '?apiKey=' + apiKey)
@@ -35,7 +34,18 @@ function App() {
             
             // logs/messages are fetched in Logs.jsx
         }
+        setReactorData(jsonData)
 
+        // get average temps
+        console.log('singel temps')
+        // console.log(singleTemps)
+        const average = calculateAverage(singleTemps)
+        setAverageTemps(prevAverage => {
+            return [...prevAverage, average].splice(-10)
+        })
+        console.log(averageTemps)
+          
+ 
         // console.log('final json')
         // console.log(jsonData)
 
@@ -56,9 +66,27 @@ function App() {
         // console.log(jsonData.reactors)
     }
 
+    /**
+     * Takes an array of reactor temperature objects from the API and calculates 
+     * the average
+     */
+    const calculateAverage = (tempObjs) => {
+        if (tempObjs.length > 0) {
+            let unit = tempObjs[0].unit
+
+            const sum = tempObjs.reduce((total, current) => {
+                return total + current.amount
+            }, 0)
+            
+            return sum / tempObjs.length
+        } else {
+            return -1
+        }
+    }
+
     useEffect(() => {
         getData()
-        const id = setInterval(getData, 200)
+        const id = setInterval(getData, 3000)
 
         return () => {
             clearInterval(id)
@@ -93,20 +121,6 @@ function App() {
     //     // console.log('average: ' + average)
     // }
     // getAverage()
-
-    /**
-     * Takes an array of reactor temperature objects from the API and
-     */
-    const calculateAverage = (tempObjs) => {
-        // tempObjs.forEach(tempObj => {
-        //     // convert to same unit
-        //     return
-        //     // average on that unit
-
-        // })
-        return 
-        // return average
-    }
 
     // const getTemps = async () => {
     //     // await reactorData.reactors.reduce(async (total, reactor) => {
@@ -155,17 +169,17 @@ function App() {
         const dataChart = new Chart(context, {
             type: 'line',
             data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                labels: averageTemps.map((_, idx) => idx),
                 datasets: [{
-                    label: 'Average Reactor Temperature',
-                    data: [12, 19, 3, 5, 2, 3],
+                    label: `Average Reactor Temperature`,
+                    data: averageTemps,
                     borderWidth: 1
                 }]
             },
             options: {
                 animation: false,
                 scales: {
-                    y: {
+                    y: { 
                         beginAtZero: true
                     }
                 }
@@ -178,7 +192,7 @@ function App() {
             dataChart.destroy()
         }
 
-    }, [])
+    }, [averageTemps])
 
     // Dismiss snackbars
     const action = (snackbarId) => (
@@ -207,7 +221,15 @@ function App() {
             <h1>{reactorData.plant_name}</h1>
             <Paper elevation={4} className='reactorContainer' sx={{ backgroundColor: 'var(--dark-blue)' }}>
                 {reactorData == '' ? 'loading' : reactorData.reactors.map((reactor, index) => {
-                        return <ReactorCard key={index} id={reactor.id} name={reactor.name} />
+                        return <ReactorCard 
+                                    key={index} 
+                                    id={reactor.id} 
+                                    name={reactor.name} 
+                                    temperature={reactor.temperature.amount} 
+                                    unit={reactor.temperature.unit} 
+                                    state={reactor.state}
+                                    status={reactor.temperature.status}
+                                />
                     })
                 }
             </Paper>
