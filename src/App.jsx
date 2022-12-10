@@ -51,8 +51,8 @@ function App() {
 
         // get total output
         const output = calcOutput(jsonData)
-        console.log('output:')
-        console.log(output)
+        // console.log('output:')
+        // console.log(output)
         setTotalOutput(output)
 
           
@@ -100,7 +100,6 @@ function App() {
      * the reactor data
      */
     const calcOutput = (data) => {
-        console.dir(data)
         const output = data.reactors.reduce((total, reactor) => {
             return total + reactor.output.amount
         }, 0)

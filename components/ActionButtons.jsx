@@ -32,14 +32,15 @@ const ActionButtons = (props) => {
 
     // Event handlers
     const toggleCoolant = async (value) => { // value -> 'on' or 'off'
-        console.log(`value: ${value}`)
+        // console.log(`value: ${value}`)
         let success = true
         for (let reactor of reactorData.reactors) {
             // fetch current state
-            const rawB = await fetch('https://nuclear.dacoder.io/reactors/coolant/' + reactor.id + '?apiKey=' + apiKey)
-            const jsonDataB = await rawB.json()
-            console.log('before state:')
-            console.log(jsonDataB)
+            // const rawB = await fetch('https://nuclear.dacoder.io/reactors/coolant/' + reactor.id + '?apiKey=' + apiKey)
+            // const jsonDataB = await rawB.json()
+            // console.log('------------------------------')
+            // console.log('before state:')
+            // console.log(jsonDataB)
             // update current state
             const raw = await fetch('https://nuclear.dacoder.io/reactors/coolant/' + reactor.id + '?apiKey=' + apiKey, {
                 headers: {
@@ -49,25 +50,36 @@ const ActionButtons = (props) => {
                 method: 'POST',
                 body: JSON.stringify({ 'coolant': value })
             })
-            console.log(raw.status)
+            const jsonResponse = await raw.json()
+            // console.dir(jsonResponse)
+            // console.log('raw.status: ')
+            // console.log(raw.status)
 
             // set success to false if there is a failure
             if (raw.status !== 201) {
                 success = false
+                // notify user of failed coolant toggle for this reactor
+                enqueueSnackbar(`${value === 'on' ? 'Enable ' : 'Disable '} coolant for  reactor ${reactor.id}: ${jsonResponse.message}`, {
+                    preventDuplicate: false,
+                    style: {
+                        width: '350px',
+                        textAlign: 'left',
+                    },
+                })
             }
 
-            console.log('result: ')
-            console.log(raw)
+            // console.log('result: ')
+            // console.log(raw)
             // display udpated state to make sure it changed
-            const rawA = await fetch('https://nuclear.dacoder.io/reactors/coolant/' + reactor.id + '?apiKey=' + apiKey)
-            const jsonDataA = await rawA.json()
-            console.log('after state:')
-            console.log(jsonDataA)
+            // const rawA = await fetch('https://nuclear.dacoder.io/reactors/coolant/' + reactor.id + '?apiKey=' + apiKey)
+            // const jsonDataA = await rawA.json()
+            // console.log('after state:')
+            // console.log(jsonDataA)
         }
 
         // notify user in snackbar
         if (success) {
-            enqueueSnackbar(`Coolant successfully ${value === 'on' ? 'enabled' : 'disabled'} for all reactors.`, {
+            enqueueSnackbar(`${value === 'on' ? 'Enable ' : 'Disable '} coolant for all reactors: ${raw.statusText}`, {
                 preventDuplicate: false,
                 style: {
                     width: '350px',
