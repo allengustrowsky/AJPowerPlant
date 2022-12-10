@@ -36,7 +36,7 @@ function App() {
             // get output data
             const rawOutput = await fetch('https://nuclear.dacoder.io/reactors/output/' + reactor.id + '?apiKey=' + apiKey)
             const jsonOutputData = await rawOutput.json() 
-            reactor.output = jsonOutputData
+            reactor.output = jsonOutputData.output
             // logs/messages are fetched in Logs.jsx
         }
         setReactorData(jsonData)
@@ -50,7 +50,9 @@ function App() {
         // console.log(averageTemps)
 
         // get total output
-        output = calcOutput(jsonData)
+        const output = calcOutput(jsonData)
+        console.log('output:')
+        console.log(output)
         setTotalOutput(output)
 
           
