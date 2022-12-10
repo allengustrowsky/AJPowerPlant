@@ -9,6 +9,7 @@ import { useSnackbar } from 'notistack'
 function App() {
     const [reactorData, setReactorData] = useState('')
     const [averageTemps, setAverageTemps] = useState([])
+    const [totalOutput, setTotalOutput] = useState(0)
     const chartRef = useRef(null)
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
@@ -31,19 +32,27 @@ function App() {
             const rawState = await fetch('https://nuclear.dacoder.io/reactors/reactor-state/' + reactor.id + '?apiKey=' + apiKey)
             const jsonStateData = await rawState.json() 
             reactor.state = jsonStateData.state
-            
+
+            // get output data
+            const rawOutput = await fetch('https://nuclear.dacoder.io/reactors/output/' + reactor.id + '?apiKey=' + apiKey)
+            const jsonOutputData = await rawOutput.json() 
+            reactor.output = jsonOutputData
             // logs/messages are fetched in Logs.jsx
         }
         setReactorData(jsonData)
 
         // get average temps
-        console.log('singel temps')
         // console.log(singleTemps)
         const average = calculateAverage(singleTemps)
         setAverageTemps(prevAverage => {
             return [...prevAverage, average].splice(-10)
         })
-        console.log(averageTemps)
+        // console.log(averageTemps)
+
+        // get total output
+        output = calcOutput(jsonData)
+        setTotalOutput(output)
+
           
  
         // console.log('final json')
@@ -82,6 +91,19 @@ function App() {
         } else {
             return -1
         }
+    }
+
+    /**
+     * Calculates the total output of all reactors in gigawatts given 
+     * the reactor data
+     */
+    const calcOutput = (data) => {
+        console.dir(data)
+        const output = data.reactors.reduce((total, reactor) => {
+            return total + reactor.output.amount
+        }, 0)
+
+        return (output / 1000)
     }
 
     useEffect(() => {
@@ -242,7 +264,14 @@ function App() {
                     </canvas>
                 </Paper>
                 {/* Output + action button */}
-                <ActionButtons reactorData={reactorData} apiKey={apiKey} enqueueSnackbar={enqueueSnackbar} closeSnackbar={closeSnackbar} action={action} />
+                <ActionButtons 
+                    reactorData={reactorData} 
+                    apiKey={apiKey} 
+                    enqueueSnackbar={enqueueSnackbar} 
+                    closeSnackbar={closeSnackbar} 
+                    action={action}
+                    totalOutput={totalOutput}
+                />
             {/* </Container> */}
             </div>
             {/* Messages and Logs */}

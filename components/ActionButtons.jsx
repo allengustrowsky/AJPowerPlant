@@ -3,8 +3,20 @@ import { Paper, Typography, Button } from '@mui/material'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 
 const ActionButtons = (props) => {
-    const { reactorData, apiKey, enqueueSnackbar, closeSnackbar, action } = props
-    const [totalOutput, setTotalOutput] = useState('')
+    const { reactorData, apiKey, enqueueSnackbar, closeSnackbar, action, totalOutput } = props
+    // const [totalOutput, setTotalOutput] = useState('')
+
+    // /**
+    //  * Calculates the total output of all reactors in gigawatts
+    //  */
+    // const calcOutput = () => {
+    //     console.dir(reactorData)
+    //     const output = reactorData.reactors.reduce((total, reactor => {
+    //         return total + reactor.output.amount
+    //     }), 0)
+
+    //     return (output / 1000)
+    // }
 
     // Theme override for actions button
     const btnTheme = createTheme({
@@ -76,15 +88,18 @@ const ActionButtons = (props) => {
         }
         console.log('----------------------------------')
     }
-    // DELETE ME
-    useEffect(() => {
-        // temp()
-        // const id = setInterval(temp, 900)
 
-        // return () => {
-            // clearInterval(id)
-        // }
-    }, [])
+
+    // useEffect(() => {
+    //     const output = calcOutput
+    //     setTotalOutput(output)
+    //     // temp()
+    //     // const id = setInterval(temp, 900)
+
+    //     // return () => {
+    //         // clearInterval(id)
+    //     // }
+    // }, [])
 
     return (
         <Paper className='actionBtnContainer data' elevation={5} >
