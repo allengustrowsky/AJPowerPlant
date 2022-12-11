@@ -49,41 +49,15 @@ function App() {
         setReactorData(jsonData)
 
         // get average temps
-        // console.log(singleTemps)
         const average = calculateAverage(singleTemps)
-        // console.log(average)
         setAverageTemp(average)
         setAverageTemps(prevAverage => {
             return [...prevAverage, average].splice(-1500) // 1500 ensures the last 5 mintues since API calls are every 0.2 seconds
         })
-        // console.log(averageTemps)
 
         // get total output
         const output = calcOutput(jsonData)
-        // console.log('output:')
-        // console.log(output)
         setTotalOutput(output)
-
-          
- 
-        // console.log('final json')
-        // console.log(jsonData)
-
-        // get temperature data
-        // const tempResponses = await Promise.all(jsonData.reactors.map(async (reactor) => {
-        //     return await fetch('https://nuclear.dacoder.io/reactors/temperature/' + reactor.id + '?apiKey=' + apiKey)
-        // }))
-        // const tempData = await Promise.all(tempResponses.map(response => {
-        //     return response.json()
-        // }))
-        // console.log(tempData)
-
-        // console.log(promises)
-
-
-        // console.log('getData')
-        // console.log(jsonData)
-        // console.log(jsonData.reactors)
     }
 
     /**
@@ -126,77 +100,8 @@ function App() {
             clearInterval(id)
         }
     }, [])
-    
-    // Get average temperature
-    // const getAverage = async () => {
-    //     // reactorData.foreach(async (reactor) => {
-    //     //     const raw = await fetch('https://nuclear.dacoder.io/reactors/temperature/' + reactor.id + '?apiKey=' + apiKey)
-    //     //     const jsonData = await raw.json()
-    //     // })
-    //     // console.table(reactorData)
-    //     const totalTemp = await reactorData.reactors.reduce(async (total, reactor) => {
-    //     // const totalTemp = await reactorData.reactors.reduce(async (prevPromise, reactor) => {
-    //         const raw = await fetch('https://nuclear.dacoder.io/reactors/temperature/' + reactor.id + '?apiKey=' + apiKey)
-    //         const jsonData = await raw.json()
-    //         // console.log('amount: ' + jsonData.temperature.amount)
-    //         // return total + temp of reactor with this id
-    //         return total + jsonData.temperature.amount
-    //     }, 0)
-    //     // }, Promise.resolve())
-    //     // console.log('total temp type: ' + typeof totalTemp)
-    //     // console.dir(totalTemp)
-    //     // console.log('total temp: ' + totalTemp)
-    //     // length
-    //     const numReactors = await reactorData.reactors.length
-    //     // console.log('numReactors: ' + numReactors)
-    //     // calculate average
-    //     // console.log(`totalTemp: ${totalTemp}; numReactore: ${numReactors}`)
-    //     const average = totalTemp / numReactors
-    //     // console.log('average: ' + average)
-    // }
-    // getAverage()
 
-    // const getTemps = async () => {
-    //     // await reactorData.reactors.reduce(async (total, reactor) => {
-    //     //     // const totalTemp = await reactorData.reactors.reduce(async (prevPromise, reactor) => {
-    //     //     const raw = await fetch('https://nuclear.dacoder.io/reactors/temperature/' + reactor.id + '?apiKey=' + apiKey)
-    //     //     const jsonData = await raw.json()
-    //     //     // return total + temp of reactor with this id
-    //     //     return total + jsonData.temperature.amount
-    //     // }, 0)
-    //     if (reactorData !== '') {
-    //         const promises = reactorData.reactors.map(reactor => {
-    //             return fetch('https://nuclear.dacoder.io/reactors/temperature/' + reactor.id + '?apiKey=' + apiKey)
-    //         })
-    //         // promises.forEach(prom => {
-    //         //     console.log(typeof prom) 
-    //         // })
-            
-    //         const reactorTempObjs = await Promise.all(promises)
-
-    //         const reactorTempObjsJson = await Promise.all(reactorTempObjs.map(async (obj) => { 
-    //             console.log('jsonfunc')
-    //             const values = await obj.json()
-    //             console.log('temperature:')
-    //             console.log(values.temperature) 
-    //             return values.temperature 
-    //         }))
-
-    //         console.log('after map()')
-    //         console.log(await reactorTempObjsJson)
-
-             
-    //         // const reactorTempObjsJson = await reactorTempObjs.json()
-    //         // console.log(reactorTempObjsJson)
-    //         calculateAverage()
-    //         // Promise.all(promises)
-    //     }
-    // }
-
-    // reporting errors if reactors aren't in right state for action (what are those conditions?)
-
-
-    // create chart
+    // Create chart
     useEffect(() => {
         const context = chartRef.current
 
@@ -220,8 +125,6 @@ function App() {
             }
         })
 
-        // getTemps()
-
         return () => {
             dataChart.destroy()
         }
@@ -234,20 +137,6 @@ function App() {
             <Button onClick={() => closeSnackbar(snackbarId)} sx={{float: 'right', display: 'inline-block'}}>Dismiss</Button>
         </>
     )
-
-    // Get reactor messages
-    // useEffect(() => {
-        // const getMessages = async () => {
-        //     const raw = await fetch('https://nuclear.dacoder.io/reactors/logs?apiKey=' + apiKey)
-        //     console.log('reactor logs;')
-        //     const jsonData = await raw.json()
-        //     setLogs(jsonData)
-        //     // console.table(raw)
-        // }
-        // getMessages()
-        // console.table(logs)
-
-    // }, [])
 
     const handleChange = (event) => {
         const { value, id } = event.target
@@ -286,7 +175,14 @@ function App() {
         <div className='appContainer'>
             <h1 className='plantName'>{reactorData.plant_name}</h1>
             <div className="setPlantName">
-                <Typography variant='h5' component='p' color='text.secondary' sx={{color: 'white'}}>Set Plant Name</Typography>
+                <Typography 
+                    variant='h5' 
+                    component='p' 
+                    color='text.secondary' 
+                    sx={{color: 'white'}}
+                >
+                    Set Plant Name
+                </Typography>
                 <TextField 
                     id='name'
                     value={name.name}
@@ -297,9 +193,6 @@ function App() {
             </div>
             <Paper className='reactorContainer' sx={{ 
                 backgroundColor: 'var(--dark-blue)',
-                // display: 'flex',
-                // flexWrap: 'wrap',
-
             }}>
                 {reactorData == '' ? 'loading' : reactorData.reactors.map((reactor, index) => {
                         return <ReactorCard 
@@ -316,7 +209,6 @@ function App() {
                     })
                 }
             </Paper>
-            {/* <Container component='div' maxWidth='xl' className='graphAndAction' sx={{backgroundColor: 'var(--dark-blue)', color: 'var(--white)'}}> */}
             {/* Graph */}
             <div className="graphAndAction">
                 <Paper className='graphContainer data' elevation={5} 
@@ -337,17 +229,11 @@ function App() {
                     averageTemp={averageTemp}
                     unit={unit}
                 />
-            {/* </Container> */}
             </div>
             {/* Messages and Logs */}
             <div className="msgsAndLogsContainer">
-                {/* <Card className='msgsContainer' sx={{width: '25rem', height: '20rem', backgroundColor: 'var(--dark-blue)', color: 'var(--white)', padding: '0.8rem'}}>
-                    Messages
-                </Card> */}
                 <Logs apiKey={apiKey} enqueueSnackbar={enqueueSnackbar} closeSnackbar={closeSnackbar} action={action} />
             </div>
-
-            {/* Logs */}
         </div>
     )
 }

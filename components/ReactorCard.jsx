@@ -1,6 +1,5 @@
 import { Card, CardActions, CardContent, CardMedia, Button, Typography } from '@mui/material'
 import reactorImage from '../src/assets/reactor.png'
-// import { redirect } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import DeviceThermostatIcon from '@mui/icons-material/DeviceThermostat';
 import HeatPumpIcon from '@mui/icons-material/HeatPump';
@@ -35,18 +34,6 @@ const ReactorCart = (props) => {
                     <Typography><DeviceThermostatIcon />{temperature.toPrecision(5)} &deg;{unit[0].toUpperCase()}</Typography>
                     <Typography><HeatPumpIcon />{status}</Typography>
                 </div>
-                {/* <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom> */}
-                {/* Word of the Day */}
-                {/* </Typography> */}
-                
-                {/* <Typography sx={{ mb: 1.5 }} color="text.secondary"> */}
-                {/* adjective */}
-                {/* </Typography> */}
-                {/* <Typography variant="body2"> */}
-                {/* well meaning and kindly. */}
-                {/* <br /> */}
-                {/* {'"a benevolent smile"'} */}
-                {/* </Typography> */}
             </CardContent>
             <CardActions>
                 <div onClick={handleRoute}>

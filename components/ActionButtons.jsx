@@ -1,22 +1,8 @@
-import { useEffect, useState } from 'react'
 import { Paper, Typography, Button } from '@mui/material'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 
 const ActionButtons = (props) => {
-    const { reactorData, apiKey, enqueueSnackbar, closeSnackbar, action, totalOutput, averageTemp, unit } = props
-    // const [totalOutput, setTotalOutput] = useState('')
-
-    // /**
-    //  * Calculates the total output of all reactors in gigawatts
-    //  */
-    // const calcOutput = () => {
-    //     console.dir(reactorData)
-    //     const output = reactorData.reactors.reduce((total, reactor => {
-    //         return total + reactor.output.amount
-    //     }), 0)
-
-    //     return (output / 1000)
-    // }
+    const { reactorData, apiKey, enqueueSnackbar, totalOutput, averageTemp, unit } = props
 
     // Theme override for actions button
     const btnTheme = createTheme({
@@ -32,15 +18,8 @@ const ActionButtons = (props) => {
 
     // Event handlers
     const toggleCoolant = async (value) => { // value -> 'on' or 'off'
-        // console.log(`value: ${value}`)
         let success = true
         for (let reactor of reactorData.reactors) {
-            // fetch current state
-            // const rawB = await fetch('https://nuclear.dacoder.io/reactors/coolant/' + reactor.id + '?apiKey=' + apiKey)
-            // const jsonDataB = await rawB.json()
-            // console.log('------------------------------')
-            // console.log('before state:')
-            // console.log(jsonDataB)
             // update current state
             const raw = await fetch('https://nuclear.dacoder.io/reactors/coolant/' + reactor.id + '?apiKey=' + apiKey, {
                 headers: {
@@ -50,9 +29,6 @@ const ActionButtons = (props) => {
                 method: 'POST',
                 body: JSON.stringify({ 'coolant': value })
             })
-            // console.dir(jsonResponse)
-            // console.log('raw.status: ')
-            // console.log(raw.status)
 
             // set success to false if there is a failure
             if (raw.status !== 201) {
@@ -67,14 +43,6 @@ const ActionButtons = (props) => {
                     },
                 })
             }
-
-            // console.log('result: ')
-            // console.log(raw)
-            // display udpated state to make sure it changed
-            // const rawA = await fetch('https://nuclear.dacoder.io/reactors/coolant/' + reactor.id + '?apiKey=' + apiKey)
-            // const jsonDataA = await rawA.json()
-            // console.log('after state:')
-            // console.log(jsonDataA)
         }
 
         // notify user in snackbar
@@ -101,18 +69,12 @@ const ActionButtons = (props) => {
                 },
                 method: 'POST',
             })
-            // console.dir(raw)
-
-            // const jsonResponse = await raw.json()
-            // console.dir(jsonResponse)
 
             if (raw.status !== 201) {
                 success = false
                 const jsonResponse = await raw.json()
                 console.dir(jsonResponse)
                 // notify user of failed controlled shutdown for this reactor
-                // console.log('fail')
-                // enqueueSnackbar(`Failed controlled shutdown for  reactor ${reactor.id}: ${jsonResponse.message}`, {
                 enqueueSnackbar(`Failed controlled shutdown for  reactor ${reactor.id}: ${jsonResponse.message}`, {
                     preventDuplicate: false,
                     style: {
@@ -142,23 +104,18 @@ const ActionButtons = (props) => {
         for (let reactor of reactorData.reactors) {
             console.log('reactor')
             const raw = await fetch('https://nuclear.dacoder.io/reactors/emergency-shutdown/' + reactor.id + '?apiKey=' + apiKey, {
-            // const raw = await fetch('https://nuclear.dacoder.io/reactors/emergency-shutdown/' + '?apiKey=' + apiKey, {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                 },
                 method: 'POST',
             })
-            // console.log(typeof raw)
-            // const jsonResponse = await raw.json()
-            // console.dir(jsonResponse)
 
             if (raw.status !== 201) {
                 success = false
                 const jsonResponse = await raw.json()
                 // notify user of failed controlled shutdown for this reactor
                 console.log('fail')
-                // enqueueSnackbar(`Failed emergency shutdown for  reactor ${reactor.id}: ${jsonResponse.message}`, {
                 enqueueSnackbar(`Failed emergency shutdown for  reactor ${reactor.id}: ${jsonResponse.message}`, {
                     preventDuplicate: false,
                     style: {
@@ -213,30 +170,6 @@ const ActionButtons = (props) => {
         }
     }
 
-
-
-    // DELETE ME and the below useESffect
-    const temp = async () => {
-        for (let reactor of reactorData.reactors) {
-            const rawB = await fetch('https://nuclear.dacoder.io/reactors/coolant/' + reactor.id + '?apiKey=' + apiKey)
-            const jsonDataB = await rawB.json()
-            console.log(jsonDataB)
-        }
-        console.log('----------------------------------')
-    }
-
-
-    // useEffect(() => {
-    //     const output = calcOutput
-    //     setTotalOutput(output)
-    //     // temp()
-    //     // const id = setInterval(temp, 900)
-
-    //     // return () => {
-    //         // clearInterval(id)
-    //     // }
-    // }, [])
-
     return (
         <Paper className='actionBtnContainer data' elevation={5} 
             sx={{height: 'max-content', backgroundColor: 'var(--light-blue)'}}
@@ -252,16 +185,49 @@ const ActionButtons = (props) => {
             <div className="btnGroup">
                 <ThemeProvider theme={btnTheme}>
                     <div className="coolantContainer btnCol">
-                        {/* <ButtonGroup className='coolantBtnGroup' orientation='vertical' size='large' variant='outlined'> */}
-                        <Button className='actionBtn' variant='contained' color='yellow' onClick={() => toggleCoolant('on')}>Enable Coolant</Button>
-                        <Button className='actionBtn' variant='contained' color='yellow' onClick={() => toggleCoolant('off')}>Disable Coolant</Button>
-                        {/* </ButtonGroup> */}
+                        <Button 
+                            className='actionBtn' 
+                            variant='contained' 
+                            color='yellow' 
+                            onClick={() => toggleCoolant('on')}
+                        >
+                            Enable Coolant
+                        </Button>
+                        <Button 
+                            className='actionBtn' 
+                            variant='contained' 
+                            color='yellow' 
+                            onClick={() => toggleCoolant('off')}
+                        >
+                            Disable Coolant
+                        </Button>
                     </div>
                     <div className="btnCol">
-                        <Button className='actionBtn' variant='contained' color='yellow' onClick={resetReactors}>Global Reset</Button>
-                        <Button className='actionBtn' variant='contained' color='yellow' onClick={controlledShutdown}>Controlled Shutdown</Button>
+                        <Button 
+                            className='actionBtn' 
+                            variant='contained' 
+                            color='yellow' 
+                            onClick={resetReactors}
+                        >
+                            Global Reset
+                        </Button>
+                        <Button 
+                            className='actionBtn' 
+                            variant='contained' 
+                            color='yellow' 
+                            onClick={controlledShutdown}
+                        >
+                            Controlled Shutdown
+                        </Button>
                     </div>
-                    <Button className='actionBtn emergencyBtn' variant='contained' color='lightRed' onClick={emergencyShutdown}>Emergency Shutdown</Button>
+                    <Button 
+                        className='actionBtn emergencyBtn' 
+                        variant='contained' 
+                        color='lightRed' 
+                        onClick={emergencyShutdown}
+                    >
+                        Emergency Shutdown
+                    </Button>
                 </ThemeProvider>
             </div>
 
