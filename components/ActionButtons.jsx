@@ -50,13 +50,13 @@ const ActionButtons = (props) => {
                 method: 'POST',
                 body: JSON.stringify({ 'coolant': value })
             })
-            const jsonResponse = await raw.json()
             // console.dir(jsonResponse)
             // console.log('raw.status: ')
             // console.log(raw.status)
 
             // set success to false if there is a failure
             if (raw.status !== 201) {
+                const jsonResponse = await raw.json()
                 success = false
                 // notify user of failed coolant toggle for this reactor
                 enqueueSnackbar(`${value === 'on' ? 'Enable ' : 'Disable '} coolant for  reactor ${reactor.id}: ${jsonResponse.message}`, {
@@ -79,7 +79,7 @@ const ActionButtons = (props) => {
 
         // notify user in snackbar
         if (success) {
-            enqueueSnackbar(`${value === 'on' ? 'Enable ' : 'Disable '} coolant for all reactors: ${raw.statusText}`, {
+            enqueueSnackbar(`${value === 'on' ? 'Enable ' : 'Disable '} coolant for all reactors was successful.`, {
                 preventDuplicate: false,
                 style: {
                     width: '350px',
@@ -101,13 +101,18 @@ const ActionButtons = (props) => {
                 },
                 method: 'POST',
             })
-            const jsonResponse = await raw.json()
-            console.dir(jsonResponse)
+            // console.dir(raw)
+
+            // const jsonResponse = await raw.json()
+            // console.dir(jsonResponse)
 
             if (raw.status !== 201) {
                 success = false
+                const jsonResponse = await raw.json()
+                console.dir(jsonResponse)
                 // notify user of failed controlled shutdown for this reactor
                 // console.log('fail')
+                // enqueueSnackbar(`Failed controlled shutdown for  reactor ${reactor.id}: ${jsonResponse.message}`, {
                 enqueueSnackbar(`Failed controlled shutdown for  reactor ${reactor.id}: ${jsonResponse.message}`, {
                     preventDuplicate: false,
                     style: {
@@ -137,19 +142,23 @@ const ActionButtons = (props) => {
         for (let reactor of reactorData.reactors) {
             console.log('reactor')
             const raw = await fetch('https://nuclear.dacoder.io/reactors/emergency-shutdown/' + reactor.id + '?apiKey=' + apiKey, {
+            // const raw = await fetch('https://nuclear.dacoder.io/reactors/emergency-shutdown/' + '?apiKey=' + apiKey, {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                 },
                 method: 'POST',
             })
-            const jsonResponse = await raw.json()
+            // console.log(typeof raw)
+            // const jsonResponse = await raw.json()
             // console.dir(jsonResponse)
 
             if (raw.status !== 201) {
                 success = false
+                const jsonResponse = await raw.json()
                 // notify user of failed controlled shutdown for this reactor
                 console.log('fail')
+                // enqueueSnackbar(`Failed emergency shutdown for  reactor ${reactor.id}: ${jsonResponse.message}`, {
                 enqueueSnackbar(`Failed emergency shutdown for  reactor ${reactor.id}: ${jsonResponse.message}`, {
                     preventDuplicate: false,
                     style: {
