@@ -1,6 +1,6 @@
 # AJPowerPlant
 - Authors: Jordy Velinov and Allen Gustrowsky
-- Date of last edit: 10 December 2022
+- Date of last edit: 11 December 2022
 
 # Sources
 ## Images
