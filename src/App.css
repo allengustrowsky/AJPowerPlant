@@ -5,7 +5,8 @@
     margin: 0 auto;
     padding: 2rem;
     text-align: center;
-    font-family: "Open Sans";
+    /* font-family: "Open Sans"; */
+    background-color: var(--dark-blue);
 }
 
 body {
@@ -23,6 +24,11 @@ body {
     flex-direction: column;
     gap: 2.5rem;
     place-items: center;
+    background-color: var(--dark-blue);
+}
+
+.planeName {
+    font-family: 'Lato, sans-serif';
 }
 
 .reactorContainer {
@@ -50,6 +56,7 @@ body {
     align-items: center;
     justify-content: center;
     gap: 6%;
+    border-radius: 4px;
 }
 
 .data {

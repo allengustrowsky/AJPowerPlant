@@ -274,7 +274,7 @@ function App() {
 
     return (
         <div className='appContainer'>
-            <h1>{reactorData.plant_name}</h1>
+            <h1 className='plantName'>{reactorData.plant_name}</h1>
             <div className="setPlantName">
                 <Typography variant='h5' component='p' color='text.secondary'>Set Plant Name</Typography>
                 <TextField 
