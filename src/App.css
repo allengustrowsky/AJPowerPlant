@@ -70,7 +70,19 @@ body {
     width: 30rem;
     height: 15rem;
     padding: 0.5rem;
+}
 
+.backButton {
+    margin-left: 10px;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+.buttonBack {
+    background-color: var(--dark-blue);
 }
 
 .graphContainer {
@@ -171,6 +183,29 @@ body {
     width: 110px;
     margin-top: 10px;
     height: 80px;
+}
+
+.coolantButton {
+    background-color: #0B3954;
+    color: white;
+    border-color: white;
+    width: 60px;
+    margin-top: 10px;
+    height: 60px;
+}
+
+.toggle {
+    margin-top: 10px;
+    background-color: #0B3954;
+}
+
+.toggleText {
+    padding-top: 15px;
+    color: white;
+}
+
+.onButton {
+    background-color: success;
 }
 
 .dataRow {

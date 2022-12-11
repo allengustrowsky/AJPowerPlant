@@ -93,7 +93,6 @@ const ActionButtons = (props) => {
                     textAlign: 'left',
                 },
             })
-
         }
 
     }
