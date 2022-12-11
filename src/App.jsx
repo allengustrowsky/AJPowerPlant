@@ -195,7 +195,9 @@ function App() {
                 backgroundColor: 'var(--dark-blue)',
             }}>
                 {reactorData == '' ? 'loading' : reactorData.reactors.map((reactor, index) => {
-                        return <ReactorCard 
+                    // return reactorData.reactors.temperature ?
+                        // <ReactorCard 
+                        return <ReactorCard
                                     key={index} 
                                     id={reactor.id} 
                                     name={reactor.name} 
@@ -205,6 +207,7 @@ function App() {
                                     unit={reactor.temperature.unit}
                                     state={reactor.state}
                                     status={reactor.temperature.status}
+                            // /> : ''
                                 />
                     })
                 }
