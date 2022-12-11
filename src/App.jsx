@@ -9,7 +9,9 @@ import { useSnackbar } from 'notistack'
 function App() {
     const [reactorData, setReactorData] = useState('')
     const [averageTemps, setAverageTemps] = useState([])
+    const [averageTemp, setAverageTemp] = useState(0)
     const [totalOutput, setTotalOutput] = useState(0)
+    const [unit, setUnit] = useState('')
     const [name, setName] = useState({name: ''})
     const chartRef = useRef(null)
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -45,6 +47,8 @@ function App() {
         // get average temps
         // console.log(singleTemps)
         const average = calculateAverage(singleTemps)
+        // console.log(average)
+        setAverageTemp(average)
         setAverageTemps(prevAverage => {
             return [...prevAverage, average].splice(-10)
         })
@@ -84,7 +88,7 @@ function App() {
      */
     const calculateAverage = (tempObjs) => {
         if (tempObjs.length > 0) {
-            let unit = tempObjs[0].unit
+            setUnit(tempObjs[0].unit)
 
             const sum = tempObjs.reduce((total, current) => {
                 return total + current.amount
@@ -322,6 +326,8 @@ function App() {
                     closeSnackbar={closeSnackbar}
                     action={action}
                     totalOutput={totalOutput}
+                    averageTemp={averageTemp}
+                    unit={unit}
                 />
             {/* </Container> */}
             </div>

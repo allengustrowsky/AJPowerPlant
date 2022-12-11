@@ -3,7 +3,7 @@ import { Paper, Typography, Button } from '@mui/material'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 
 const ActionButtons = (props) => {
-    const { reactorData, apiKey, enqueueSnackbar, closeSnackbar, action, totalOutput } = props
+    const { reactorData, apiKey, enqueueSnackbar, closeSnackbar, action, totalOutput, averageTemp, unit } = props
     // const [totalOutput, setTotalOutput] = useState('')
 
     // /**
@@ -240,9 +240,14 @@ const ActionButtons = (props) => {
         <Paper className='actionBtnContainer data' elevation={5} 
             sx={{height: 'max-content', backgroundColor: 'var(--light-blue)'}}
         >
-            <Typography className='totalOutputContainer' variant='h5' component='h2'>
-                Total Output: <p className='totalOutputData'>{(totalOutput === '') ? 'Loading...' : `${totalOutput} Gw`}</p>
-            </Typography>
+            <div className="totals">
+                <Typography className='totalOutputContainer' variant='h5' component='h2'>
+                    Total Output: <p className='totalOutputData'>{(totalOutput === '') ? 'Loading...' : `${totalOutput} Gw`}</p>
+                </Typography>
+                <Typography className='totalOutputContainer' variant='h5' component='h2'>
+                    Average Temperature: <p className='totalOutputData'>{(averageTemp === 0) ? 'Loading...' : `${averageTemp.toPrecision(5)}`}&deg; {unit[0].toUpperCase()}</p>
+                </Typography>
+            </div>
             <div className="btnGroup">
                 <ThemeProvider theme={btnTheme}>
                     <div className="coolantContainer btnCol">
