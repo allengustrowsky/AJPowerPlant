@@ -285,7 +285,12 @@ function App() {
                 />
                 {name.name !== '' && <Button variant='contained' onClick={handleClick}>Enter</Button>}
             </div>
-            <Paper elevation={4} className='reactorContainer' sx={{ backgroundColor: 'var(--dark-blue)' }}>
+            <Paper elevation={4} className='reactorContainer' sx={{ 
+                backgroundColor: 'var(--dark-blue)',
+                // display: 'flex',
+                // flexWrap: 'wrap',
+
+            }}>
                 {reactorData == '' ? 'loading' : reactorData.reactors.map((reactor, index) => {
                         return <ReactorCard 
                                     key={index} 
@@ -302,7 +307,9 @@ function App() {
             {/* <Container component='div' maxWidth='xl' className='graphAndAction' sx={{backgroundColor: 'var(--dark-blue)', color: 'var(--white)'}}> */}
             {/* Graph */}
             <div className="graphAndAction">
-                <Paper className='graphContainer data' elevation={5}>
+                <Paper className='graphContainer data' elevation={5} 
+                    // sx={{width: '330px', height: 'max-content'}}
+                >
                     <canvas ref={chartRef} className='graphCanvas'>
 
                     </canvas>
@@ -312,7 +319,7 @@ function App() {
                     reactorData={reactorData} 
                     apiKey={apiKey} 
                     enqueueSnackbar={enqueueSnackbar} 
-                    closeSnackbar={closeSnackbar} 
+                    closeSnackbar={closeSnackbar}
                     action={action}
                     totalOutput={totalOutput}
                 />
