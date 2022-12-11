@@ -54,7 +54,7 @@ function App() {
         // console.log(average)
         setAverageTemp(average)
         setAverageTemps(prevAverage => {
-            return [...prevAverage, average].splice(-10)
+            return [...prevAverage, average].splice(-1500) // 1500 ensures the last 5 mintues since API calls are every 0.2 seconds
         })
         // console.log(averageTemps)
 
