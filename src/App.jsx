@@ -104,7 +104,7 @@ function App() {
             return total + reactor.output.amount
         }, 0)
 
-        return (output / 1000)
+        return (output / 1000).toPrecision(3)
     }
 
     useEffect(() => {
