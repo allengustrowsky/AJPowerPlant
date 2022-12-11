@@ -87,7 +87,7 @@ const Logs = (props) => {
     // }, [logs])  
 
     return (
-        <Card className='logsContainer' sx={{width: '40rem', height: '20rem', backgroundColor: 'var(--dark-blue)', color: 'var(--white)', overflow: 'scroll'}}>
+        <Card className='logsContainer' sx={{width: '40rem', height: '20rem', overflow: 'scroll'}}>
             <Typography variant='h4' component='h2'>System Logs</Typography>
             {messages === '' ? 'Loading...' : messages.map((message, index) => {
                 return <Typography key={index} variant='subtitle1' component='p'>{message}</Typography>

@@ -276,16 +276,16 @@ function App() {
         <div className='appContainer'>
             <h1 className='plantName'>{reactorData.plant_name}</h1>
             <div className="setPlantName">
-                <Typography variant='h5' component='p' color='text.secondary'>Set Plant Name</Typography>
+                <Typography variant='h5' component='p' color='text.secondary' sx={{color: 'white'}}>Set Plant Name</Typography>
                 <TextField 
                     id='name'
                     value={name.name}
                     onChange={handleChange}
-                    label='Enter name...'
+                    sx={{border: '1px solid white', borderRadius: '4px'}}
                 />
                 {name.name !== '' && <Button variant='contained' onClick={handleClick}>Enter</Button>}
             </div>
-            <Paper elevation={4} className='reactorContainer' sx={{ 
+            <Paper className='reactorContainer' sx={{ 
                 backgroundColor: 'var(--dark-blue)',
                 // display: 'flex',
                 // flexWrap: 'wrap',
@@ -308,7 +308,7 @@ function App() {
             {/* Graph */}
             <div className="graphAndAction">
                 <Paper className='graphContainer data' elevation={5} 
-                    // sx={{width: '330px', height: 'max-content'}}
+                    sx={{backgroundColor: 'var(--light-blue)'}}
                 >
                     <canvas ref={chartRef} className='graphCanvas'>
 

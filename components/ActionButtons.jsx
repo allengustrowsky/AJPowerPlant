@@ -238,7 +238,7 @@ const ActionButtons = (props) => {
 
     return (
         <Paper className='actionBtnContainer data' elevation={5} 
-            sx={{height: 'max-content'}}
+            sx={{height: 'max-content', backgroundColor: 'var(--light-blue)'}}
         >
             <Typography className='totalOutputContainer' variant='h5' component='h2'>
                 Total Output: <p className='totalOutputData'>{(totalOutput === '') ? 'Loading...' : `${totalOutput} Gw`}</p>

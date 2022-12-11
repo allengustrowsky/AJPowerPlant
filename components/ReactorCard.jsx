@@ -16,7 +16,7 @@ const ReactorCart = (props) => {
     }
 
     return (
-        <Card sx={{ minWidth: 275 }}>
+        <Card className='reactorCard' sx={{ minWidth: 275, backgroundColor: 'var(--light-blue)' }}>
             <CardMedia
                 component="img"
                 height="140"
@@ -50,7 +50,7 @@ const ReactorCart = (props) => {
             </CardContent>
             <CardActions>
                 <div onClick={handleRoute}>
-                    <Button size="small" sx={{color: 'var(--dark-blue)'}}>View Data</Button>
+                    <Button size="small" variant='outlined' sx={{color: 'var(--dark-blue)'}}>View Data</Button>
                 </div>
             </CardActions>
         </Card>

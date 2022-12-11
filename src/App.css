@@ -44,6 +44,10 @@ body {
     box-shadow: var(--large-card-box-shadow);
 }
 
+.reactorCard {
+    background-color: var(--light-blue);
+}
+
 
 
 /* Graph and Action Buttons Section */
@@ -72,13 +76,14 @@ body {
 .graphContainer {
     width: 330px;
     height: 200px;
+    
     /* margin-right: 6rem; */
     /* width: 600px; */
     /* background-color: green; */
 }
 
 .graphCanvas {
-
+    /* background-color: var(--light-blue); */
     /* background-color: orange; */
 }
 
@@ -120,7 +125,6 @@ body {
     width: 9rem;
 }
 
-/* button colors are configured inline with createTheme */
 
 
 /* Message and Logs */
