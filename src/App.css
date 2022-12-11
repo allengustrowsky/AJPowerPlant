@@ -27,8 +27,9 @@ body {
     background-color: var(--dark-blue);
 }
 
-.planeName {
-    font-family: 'Lato, sans-serif';
+.plantName {
+    font-family: 'Lato', 'sans-serif';
+    color: white;
 }
 
 .reactorContainer {
