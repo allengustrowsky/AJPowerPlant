@@ -89,6 +89,120 @@ const ActionButtons = (props) => {
         }
     }
 
+    const controlledShutdown = async () => {
+        let success = true
+
+        for (let reactor of reactorData.reactors) {
+            console.log('reactor')
+            const raw = await fetch('https://nuclear.dacoder.io/reactors/controlled-shutdown/' + reactor.id + '?apiKey=' + apiKey, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                method: 'POST',
+            })
+            const jsonResponse = await raw.json()
+            console.dir(jsonResponse)
+
+            if (raw.status !== 201) {
+                success = false
+                // notify user of failed controlled shutdown for this reactor
+                // console.log('fail')
+                enqueueSnackbar(`Failed controlled shutdown for  reactor ${reactor.id}: ${jsonResponse.message}`, {
+                    preventDuplicate: false,
+                    style: {
+                        width: '350px',
+                        textAlign: 'left',
+                    },
+                })
+            }
+        }
+
+        if (success) {
+            enqueueSnackbar('Controlled shutdown for all reactors successful.', {
+                preventDuplicate: false,
+                style: {
+                    width: '350px',
+                    textAlign: 'left',
+                },
+            })
+
+        }
+
+    }
+
+    const emergencyShutdown = async () => {
+        let success = true
+
+        for (let reactor of reactorData.reactors) {
+            console.log('reactor')
+            const raw = await fetch('https://nuclear.dacoder.io/reactors/emergency-shutdown/' + reactor.id + '?apiKey=' + apiKey, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                method: 'POST',
+            })
+            const jsonResponse = await raw.json()
+            // console.dir(jsonResponse)
+
+            if (raw.status !== 201) {
+                success = false
+                // notify user of failed controlled shutdown for this reactor
+                console.log('fail')
+                enqueueSnackbar(`Failed emergency shutdown for  reactor ${reactor.id}: ${jsonResponse.message}`, {
+                    preventDuplicate: false,
+                    style: {
+                        width: '350px',
+                        textAlign: 'left',
+                    },
+                })
+            }
+        }
+
+        if (success) {
+            console.log('success all')
+            enqueueSnackbar('Emergency shutdown for all reactors successful.', {
+                preventDuplicate: false,
+                style: {
+                    width: '350px',
+                    textAlign: 'left',
+                },
+            })
+
+        }
+
+    }
+
+    const resetReactors = async () => {
+        console.log('reset')
+        const raw = await fetch('https://nuclear.dacoder.io/reactors/reset?apiKey=' + apiKey, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            method: 'POST',
+        })
+
+        if (raw.status !== 201) { // failed reset
+            enqueueSnackbar('Failed to reset reactors.', {
+                preventDuplicate: false,
+                style: {
+                    width: '350px',
+                    textAlign: 'left',
+                },
+            })
+        } else {
+            enqueueSnackbar('Global reset successful.', {
+                preventDuplicate: false,
+                style: {
+                    width: '350px',
+                    textAlign: 'left',
+                },
+            })
+        }
+    }
+
 
 
     // DELETE ME and the below useESffect
@@ -127,10 +241,10 @@ const ActionButtons = (props) => {
                         {/* </ButtonGroup> */}
                     </div>
                     <div className="btnCol">
-                        <Button className='actionBtn' variant='contained' color='yellow'>Global Reset</Button>
-                        <Button className='actionBtn' variant='contained' color='yellow'>Controller Shutdown</Button>
+                        <Button className='actionBtn' variant='contained' color='yellow' onClick={resetReactors}>Global Reset</Button>
+                        <Button className='actionBtn' variant='contained' color='yellow' onClick={controlledShutdown}>Controlled Shutdown</Button>
                     </div>
-                    <Button className='actionBtn emergencyBtn' variant='contained' color='lightRed'>Emergency Shutdown</Button>
+                    <Button className='actionBtn emergencyBtn' variant='contained' color='lightRed' onClick={emergencyShutdown}>Emergency Shutdown</Button>
                 </ThemeProvider>
             </div>
 
