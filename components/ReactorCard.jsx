@@ -32,7 +32,7 @@ const ReactorCart = (props) => {
                 </div>
 
                 <div className="dataRow">
-                    <Typography><DeviceThermostatIcon />{temperature} &deg;{unit[0].toUpperCase()}</Typography>
+                    <Typography><DeviceThermostatIcon />{temperature.toPrecision(5)} &deg;{unit[0].toUpperCase()}</Typography>
                     <Typography><HeatPumpIcon />{status}</Typography>
                 </div>
                 {/* <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom> */}
