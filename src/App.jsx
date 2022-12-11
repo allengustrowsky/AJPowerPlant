@@ -25,22 +25,26 @@ function App() {
         const singleTemps = []
 
         for (let reactor of jsonData.reactors) {
+            console.log(reactor.id)
             // get temperature data (value, unit, and level)
             const rawTemp = await fetch('https://nuclear.dacoder.io/reactors/temperature/' + reactor.id + '?apiKey=' + apiKey)
             const jsonTempData = await rawTemp.json()
             reactor.temperature = jsonTempData.temperature
             singleTemps.push(jsonTempData.temperature)
+            console.log('getTemps')
 
             // get reactor state data
             const rawState = await fetch('https://nuclear.dacoder.io/reactors/reactor-state/' + reactor.id + '?apiKey=' + apiKey)
             const jsonStateData = await rawState.json() 
             reactor.state = jsonStateData.state
+            console.log('getstate')
 
             // get output data
             const rawOutput = await fetch('https://nuclear.dacoder.io/reactors/output/' + reactor.id + '?apiKey=' + apiKey)
             const jsonOutputData = await rawOutput.json() 
             reactor.output = jsonOutputData.output
             // logs/messages are fetched in Logs.jsx
+            console.log('getoutput')
         }
         setReactorData(jsonData)
 
@@ -91,6 +95,7 @@ function App() {
             setUnit(tempObjs[0].unit)
 
             const sum = tempObjs.reduce((total, current) => {
+                // return current ? total + current.amount : total
                 return total + current.amount
             }, 0)
             
@@ -106,7 +111,8 @@ function App() {
      */
     const calcOutput = (data) => {
         const output = data.reactors.reduce((total, reactor) => {
-            return total + reactor.output.amount
+            // return reactor.output ? total + reactor.output.amount : total
+            return reactor.output ? total + reactor.output.amount : total
         }, 0)
 
         return (output / 1000).toPrecision(3)
@@ -114,7 +120,7 @@ function App() {
 
     useEffect(() => {
         getData()
-        const id = setInterval(getData, 3000)
+        const id = setInterval(getData, 200)
 
         return () => {
             clearInterval(id)
@@ -300,8 +306,10 @@ function App() {
                                     key={index} 
                                     id={reactor.id} 
                                     name={reactor.name} 
-                                    temperature={reactor.temperature.amount} 
-                                    unit={reactor.temperature.unit} 
+                                    // temperature={reactor.temperature ? reactor.temperature.amount : 0} 
+                                    temperature={reactor.temperature.amount}
+                                    // unit={reactor.temperature ? reactor.temperature.unit : ''} 
+                                    unit={reactor.temperature.unit}
                                     state={reactor.state}
                                     status={reactor.temperature.status}
                                 />

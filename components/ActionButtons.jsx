@@ -192,6 +192,7 @@ const ActionButtons = (props) => {
             },
             method: 'POST',
         })
+        location.reload()
 
         if (raw.status !== 201) { // failed reset
             enqueueSnackbar('Failed to reset reactors.', {
@@ -245,7 +246,7 @@ const ActionButtons = (props) => {
                     Total Output: <p className='totalOutputData'>{(totalOutput === '') ? 'Loading...' : `${totalOutput} Gw`}</p>
                 </Typography>
                 <Typography className='totalOutputContainer' variant='h5' component='h2'>
-                    Average Temperature: <p className='totalOutputData'>{(averageTemp === 0) ? 'Loading...' : `${averageTemp.toPrecision(5)}`}&deg; {unit[0].toUpperCase()}</p>
+                    Average Temperature: <p className='totalOutputData'>{(averageTemp === 0) ? 'Loading...' : `${averageTemp.toPrecision(5)}`}&deg; {unit !== '' && unit[0].toUpperCase()}</p>
                 </Typography>
             </div>
             <div className="btnGroup">
