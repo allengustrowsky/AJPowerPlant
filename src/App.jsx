@@ -3,13 +3,14 @@ import './App.css'
 import ReactorCard from '../components/ReactorCard'
 import Logs from '../components/Logs'
 import ActionButtons from '../components/ActionButtons'
-import { Paper, Card, Button } from '@mui/material';
+import { Paper, Card, Button, TextField, Typography } from '@mui/material';
 import { useSnackbar } from 'notistack'
 
 function App() {
     const [reactorData, setReactorData] = useState('')
     const [averageTemps, setAverageTemps] = useState([])
     const [totalOutput, setTotalOutput] = useState(0)
+    const [name, setName] = useState({name: ''})
     const chartRef = useRef(null)
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
@@ -238,10 +239,52 @@ function App() {
 
     // }, [])
 
+    const handleChange = (event) => {
+        const { value, id } = event.target
+        setName({
+            [id]: value,
+        })
+    }
+
+    const handleClick = async () => {
+        const raw = await fetch('https://nuclear.dacoder.io/reactors/plant-name?apiKey=' + apiKey, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            method: 'PUT',
+            body: JSON.stringify(name)
+        })
+
+        // notify user if there's an error
+        if (raw.status !== 200) {
+            const jsonData = await raw.json()
+            enqueueSnackbar(`Failed to reset plant name: ${jsonData.message}`, {
+                preventDuplicate: false,
+                style: {
+                    width: '350px',
+                    textAlign: 'left',
+                },
+            })
+        }
+
+        // reset name input
+        setName({name: ''})
+    }
 
     return (
         <div className='appContainer'>
             <h1>{reactorData.plant_name}</h1>
+            <div className="setPlantName">
+                <Typography variant='h5' component='p' color='text.secondary'>Set Plant Name</Typography>
+                <TextField 
+                    id='name'
+                    value={name.name}
+                    onChange={handleChange}
+                    label='Enter name...'
+                />
+                {name.name !== '' && <Button variant='contained' onClick={handleClick}>Enter</Button>}
+            </div>
             <Paper elevation={4} className='reactorContainer' sx={{ backgroundColor: 'var(--dark-blue)' }}>
                 {reactorData == '' ? 'loading' : reactorData.reactors.map((reactor, index) => {
                         return <ReactorCard 

@@ -167,3 +167,14 @@ body {
 .rowFirst {
     margin: 1rem 0;
 }
+
+.setPlantName {
+    display: flex;
+    width: 100%;
+    justify-content: left;
+    align-items: center;
+    gap: 0.5rem;
+    /* flex-direction: row; */
+
+    /* width */
+}
